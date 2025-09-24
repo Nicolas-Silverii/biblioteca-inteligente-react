@@ -1,18 +1,14 @@
-import { useState } from 'react';
 import Login from './pages/Login';
-import Home from './pages/Home';
+import Perfil from './pages/Perfil';
+import Biblioteca from './pages/Biblioteca';
 
 function App() {
-  const [mostrarHome, setMostrarHome] = useState(false);
-
   return (
     <div>
-      {mostrarHome ? (
-        <Home />
-      ) : (
-        <Login setMostrarHome={setMostrarHome} />
-      )}
-    </div>
+       <Login /> 
+      {/* <Perfil /> */} 
+      {/*<Biblioteca />*/}
+    </div> // De esta forma voy alternando las vistas, ya que no implementé lógica aún
   );
 }
 
