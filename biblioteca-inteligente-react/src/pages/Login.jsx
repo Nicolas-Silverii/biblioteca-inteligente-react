@@ -17,7 +17,7 @@ function Login() {
 
   return (
     <main className="login-page claro fuente-mediana">
-      <header>
+      <header>  
         <div id="logo-container">
           <img src="/img/logo.png" alt="Logo Biblioteca" id="logo" />
         </div>
