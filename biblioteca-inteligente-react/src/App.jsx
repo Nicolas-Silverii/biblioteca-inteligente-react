@@ -1,14 +1,44 @@
+import { useState } from 'react';
 import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import Biblioteca from './pages/Biblioteca';
 
 function App() {
+  const [vistaActual, setVistaActual] = useState("login");
+  const [usuarioActivo, setUsuarioActivo] = useState(null);
+
+  const cerrarSesion = () => {
+    setUsuarioActivo(null);
+    setVistaActual("login");
+  };
+
   return (
     <div>
-       <Login /> 
-      {/* <Perfil /> */} 
-      {/*<Biblioteca />*/}
-    </div> // De esta forma voy alternando las vistas, ya que no implementé lógica aún
+      {vistaActual === "login" && (
+        <Login
+          onLoginExitoso={(usuario) => {
+            setUsuarioActivo(usuario);
+            setVistaActual("biblioteca");
+          }}
+        />
+      )}
+
+      {vistaActual === "biblioteca" && usuarioActivo && (
+        <Biblioteca
+          usuario={usuarioActivo}
+          irA={setVistaActual}
+          cerrarSesion={cerrarSesion}
+        />
+      )}
+
+      {vistaActual === "perfil" && usuarioActivo && (
+        <Perfil
+          usuario={usuarioActivo}
+          irA={setVistaActual}
+          cerrarSesion={cerrarSesion}
+        />
+      )}
+    </div>
   );
 }
 

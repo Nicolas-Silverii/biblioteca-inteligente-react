@@ -1,6 +1,3 @@
-import React from 'react';
-import './Modal.css'; // si querés estilos separados
-
 const Modal = ({ mensaje, tipo, onClose }) => {
   if (!mensaje) return null;
 
