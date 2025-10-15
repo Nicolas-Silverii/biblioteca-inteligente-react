@@ -1,64 +1,59 @@
-function Perfil() {
+import { useState } from "react";
+import Navbar from "../components/Navbar";
+import ModalAjustes from "../components/ModalAjustes";
+
+function Perfil({ usuario, irA, cerrarSesion }) {
+  const [mostrarAjustes, setMostrarAjustes] = useState(false);
+
+  const agregarLibro = (e) => {
+    e.preventDefault();
+    const nuevoLibro = {
+      id: Date.now(),
+      titulo: e.target.titulo.value,
+      autor: e.target.autor.value,
+      imagen: URL.createObjectURL(e.target.imagen.files[0]),
+      año: new Date().getFullYear(),
+    };
+
+    const librosGuardados = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
+    localStorage.setItem("librosFavoritos", JSON.stringify([...librosGuardados, nuevoLibro]));
+
+    console.log("Libro agregado:", nuevoLibro);
+    e.target.reset();
+  };
+
   return (
     <>
-      <header>
-        <div id="logo-container">
-          <img src="/img/logo.png" alt="Logo Biblioteca" id="logo" />
-        </div>
-
-        <nav className="navbar">
-          <ul className="navbar-list">
-            <li><a href="/libros">📚 Biblioteca</a></li>
-            <li><a href="/perfil">👤 Mis libros</a></li>
-            <li className="empujar-derecha">
-              <a href="#">🚪 Cerrar sesión</a>
-              <button id="btn-ajustes">⚙</button>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Navbar
+        vistaActual="perfil"
+        irA={irA}
+        cerrarSesion={cerrarSesion}
+        onAjustes={() => setMostrarAjustes(true)}
+        usuario={usuario}
+      />
 
       <main>
         <section id="mis-libros">
           <h2>MIS LIBROS</h2>
-          <div id="favoritos-container" className="grid-libros"></div>
+          <div id="favoritos-container" className="grid-libros">
+            {/* Libros */}
+          </div>
         </section>
 
         <section id="agregar-libro" className="grid-libros">
           <div className="libro-favorito">
             <h3>Agregar nuevo libro</h3>
-            <form id="form-nuevo-libro">
-              <input type="text" id="titulo-nuevo" placeholder="Título" required />
-              <input type="text" id="autor-nuevo" placeholder="Autor" required />
-              <input type="file" id="imagen-nueva" accept="image/*" required />
+            <form id="form-nuevo-libro" onSubmit={agregarLibro}>
+              <input type="text" name="titulo" placeholder="Título" required />
+              <input type="text" name="autor" placeholder="Autor" required />
+              <input type="file" name="imagen" accept="image/*" required />
               <button type="submit">Agregar</button>
             </form>
           </div>
         </section>
 
-        <div id="modal-ajustes" className="modal oculto">
-          <div className="modal-contenido">
-            <h2 id="modal-title">Ajustes</h2>
+        <ModalAjustes visible={mostrarAjustes} onClose={() => setMostrarAjustes(false)} />
 
-            <label htmlFor="tema-select">Tema:</label>
-            <select id="tema-select">
-              <option value="claro">Claro</option>
-              <option value="oscuro">Oscuro</option>
-            </select>
-
-            <label htmlFor="fuente-select">Tamaño de Fuente:</label>
-            <select id="fuente-select">
-              <option value="chica">Chica</option>
-              <option value="mediana">Mediana</option>
-              <option value="grande">Grande</option>
-            </select>
-
-            <div className="modal-botones">
-              <button id="guardar-ajustes">Guardar</button>
-              <button id="cerrar-ajustes">Cerrar</button>
-            </div>
-          </div>
-        </div>
       </main>
 
       <footer>

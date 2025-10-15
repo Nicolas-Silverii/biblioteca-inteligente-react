@@ -1,56 +1,58 @@
-function Libros() {
+import { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import ModalAjustes from "../components/ModalAjustes";
+import Card from "../components/Card";
+
+function Biblioteca({ usuario, irA, cerrarSesion }) {
+  const [mostrarAjustes, setMostrarAjustes] = useState(false);
+  const [libros, setLibros] = useState([]);
+
+  useEffect(() => {
+    const cargarLibros = async () => {
+      try {
+        const respuesta = await fetch("/data/libros.json");
+        const librosJson = await respuesta.json();
+
+        const favoritos = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
+        setLibros([...librosJson, ...favoritos]);
+      } catch (error) {
+        console.error("Error al cargar libros:", error);
+      }
+    };
+
+    cargarLibros();
+  }, []);
+
   return (
     <>
-      <header>
-        <div id="logo-container">
-          <img src="/img/logo.png" alt="Logo Biblioteca" id="logo" />
-        </div>
-
-        <nav className="navbar">
-          <ul className="navbar-list">
-            <li><a href="/libros">📚 Biblioteca</a></li>
-            <li><a href="/perfil">👤 Mis libros</a></li>
-            <li className="empujar-derecha">
-              <div className="search-container">
-                <input type="text" id="buscar-libros" placeholder="Buscar libros..." />
-              </div>
-              <a href="#">🚪 Cerrar sesión</a>
-              <button id="btn-ajustes">⚙</button>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Navbar
+        vistaActual="biblioteca"
+        irA={irA}
+        cerrarSesion={cerrarSesion}
+        mostrarBuscador={true}
+        onAjustes={() => setMostrarAjustes(true)}
+        usuario={usuario}
+      />
 
       <main>
         <section id="mis-libros">
           <h2>BIBLIOTECA</h2>
-          <div id="lista-libros" className="grid-libros"></div>
-        </section>
-      </main>
-
-      <div id="modal-ajustes" className="modal oculto">
-        <div className="modal-contenido">
-          <h2 id="modal-title">Ajustes</h2>
-
-          <label htmlFor="tema-select">Tema:</label>
-          <select id="tema-select">
-            <option value="claro">Claro</option>
-            <option value="oscuro">Oscuro</option>
-          </select>
-
-          <label htmlFor="fuente-select">Tamaño de Fuente:</label>
-          <select id="fuente-select">
-            <option value="chica">Chica</option>
-            <option value="mediana">Mediana</option>
-            <option value="grande">Grande</option>
-          </select>
-
-          <div className="modal-botones">
-            <button id="guardar-ajustes">Guardar</button>
-            <button id="cerrar-ajustes">Cerrar</button>
+          <div id="lista-libros" className="grid-libros">
+            {libros.map((libro) => (
+              <Card
+                key={libro.id || libro.titulo}
+                titulo={libro.titulo}
+                autor={libro.autor}
+                imagen={libro.imagen}
+                descripcion={`Publicado en ${libro.año || "fecha desconocida"}`}
+              />
+            ))}
           </div>
-        </div>
-      </div>
+        </section>
+
+        <ModalAjustes visible={mostrarAjustes} onClose={() => setMostrarAjustes(false)} />
+
+      </main>
 
       <footer>
         <p>© 2025 Biblioteca Interactiva – Todos los derechos reservados</p>
@@ -62,4 +64,4 @@ function Libros() {
   );
 }
 
-export default Libros;
+export default Biblioteca;
