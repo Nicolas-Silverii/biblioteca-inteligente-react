@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Open+Sans:ital,wght@0,400;1,400&family=Poppins:wght@400;600&display=swap');
-
-/*
- VARIABLES & RESETEO
-*/
+/* ============ VARIABLES & RESETEO ========== */
 :root {
   --color-primario:   #3498db;
   --color-secundario: #cb54c3;
@@ -26,9 +22,7 @@
   box-sizing: border-box;
 }
 
-/*
-  CUERPO Y TEMAS
-*/
+/* ====================CUERPO Y TEMAS=======================*/
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background: #f4f4f4;
@@ -36,68 +30,13 @@ body {
   transition: background .3s, color .3s, font-size .3s;
   overflow-x: hidden;
 }
-body.claro            { background-color:white; }
+body.claro            { background-color: white; }
 body.oscuro           { background: var(--fondo-oscuro); color: var(--texto-claro); }
 body.fuente-chica     { font-size: var(--fuente-chica); }
 body.fuente-mediana   { font-size: var(--fuente-mediana); }
 body.fuente-grande    { font-size: var(--fuente-grande); }
 
-
-/* 
-NAVBAR & LOGO 
-*/
-.navbar {
-  display: flex;
-  align-items: center;
-  background: var(--fondo-claro);
-  padding: 10px 20px;
-  box-shadow: var(--sombra-suave);
-}
-
-
-.navbar-list {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-
-.empujar-derecha {
-  margin-left: auto;
-}
-
-
-.navbar-list a {
-  color: var(--color-primario);
-  font-weight: bold;
-  text-decoration: none;
-  transition: color .3s;
-}
-.navbar-list a:hover {
-  color: var(--color-secundario);
-}
-
-#btn-ajustes {
-  background: var(--color-primario);
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background .3s, transform .2s;
-}
-#btn-ajustes:hover {
-  background: var(--color-secundario);
-  transform: translateY(-2px);
-}
-
+/* ====================== NAVBAR & LOGO =================== */
 #logo-container {
   display: flex;
   justify-content: center;
@@ -111,6 +50,85 @@ NAVBAR & LOGO
   object-fit: contain;
 }
 
+.navbar {
+  display: flex;
+  align-items: center;
+  background: var(--fondo-claro);
+  padding: 10px 20px;
+  box-shadow: var(--sombra-suave);
+}
+.navbar-list {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  list-style: none;
+}
+.empujar-derecha {
+  margin-left: auto;
+}
+
+/* ===================== BOTONES REUTILIZABLES ======================== */
+.boton {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .3s, transform .2s;
+}
+.boton-primario {
+  background: var(--color-primario);
+  color: #fff;
+}
+.boton-primario:hover {
+  background: var(--color-secundario);
+  transform: translateY(-2px);
+}
+.boton-peligro {
+  background: var(--color-peligro);
+  color: #fff;
+}
+.boton-peligro:hover {
+  background: var(--color-peligro-h);
+}
+
+/* ==================== BOTONES DE NAVEGACIÓN ============================= */
+.nav-btn {
+  background: transparent;
+  border: 2px solid var(--color-primario);
+  color: var(--color-primario);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  transition: background .3s, color .3s, transform .2s;
+}
+.nav-btn:hover {
+  background: var(--color-primario);
+  color: #fff;
+  transform: translateY(-2px);
+}
+.nav-btn:disabled {
+  background: var(--color-primario);
+  color: #fff;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================= BOTÓN AJUSTES ================================ */
+#btn-ajustes {
+  composes: boton boton-primario;
+  padding: 8px 14px;
+  font-size: 1rem;
+}
+#btn-ajustes:hover {
+  background: var(--color-secundario);
+  transform: translateY(-2px);
+}
+
+/* =========================== BUSCADOR ==================================== */
 .search-container {
   margin-left: 20px;
 }
@@ -120,9 +138,7 @@ NAVBAR & LOGO
   border: 1px solid #ccc;
 }
 
-/* 
-  SECCIÓN “MIS LIBROS” Y “MIS FAVORITOS”
-*/
+/* ========================== SECCIÓN “MIS LIBROS” ============================ */
 #mis-libros {
   background: var(--fondo-claro);
   padding: 40px 20px;
@@ -130,41 +146,39 @@ NAVBAR & LOGO
   margin: 30px auto;
   border-radius: 10px;
   box-shadow: var(--sombra-media);
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-
 #mis-libros h2 {
-  position: relative;
   font-family: 'Montserrat', sans-serif;
-  font-size: 2.2rem;
+  font-size: clamp(2rem, 5vw, 2.8rem);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  background: var(--color-terciario);
+  letter-spacing: 1px;
+  color: #fff;
+  background: linear-gradient(135deg, #6a47c9, #cb54c3);
+  padding: 16px 32px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+  isolation: isolate;
+  animation: fadeInDown 0.6s ease-out;
 }
-
-
 #mis-libros h2::after {
   content: '';
   position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #3498db, #cb54c3);
-  border-radius: 2px;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(0,0,0,0.05));
+  z-index: -1;
 }
-
-
-/*
-   LIBROS Y FAVORITOS
-*/
-
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 #mis-libros .grid-libros {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -173,13 +187,10 @@ NAVBAR & LOGO
   background: var(--fondo-claro);
   border-radius: 8px;
   box-shadow: var(--sombra-suave);
-  align-items: stretch;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 }
-
-
 @media (max-width: 900px) {
   #mis-libros .grid-libros {
     grid-template-columns: repeat(2, 1fr);
@@ -191,10 +202,7 @@ NAVBAR & LOGO
   }
 }
 
-/* 
-   TARJETAS  Y LIBROS FAVORITOS
-*/
-
+/* =============TARJETAS DE LIBROS ================== */
 .book-card,
 .libro-favorito {
   display: flex;
@@ -207,8 +215,6 @@ NAVBAR & LOGO
   transition: transform .3s;
   height: 100%;
 }
-
-
 .book-card img,
 .libro-favorito img {
   width: 100%;
@@ -217,8 +223,6 @@ NAVBAR & LOGO
   border-radius: 8px;
   margin-bottom: 15px;
 }
-
-
 .book-card h3,
 .libro-favorito h3 {
   font-family: 'Poppins', sans-serif;
@@ -235,7 +239,6 @@ NAVBAR & LOGO
   color: var(--color-secundario);
   transform: scale(1.05);
 }
-
 .book-card p,
 .libro-favorito p {
   font-family: 'Open Sans', sans-serif;
@@ -248,99 +251,7 @@ NAVBAR & LOGO
   flex: 1;
 }
 
-.fav-btn {
-  background: var(--color-secundario);
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 5px;
-  font-family: 'Poppins', sans-serif;
-  font-size: .95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background .3s, transform .2s;
-}
-.fav-btn:hover {
-  background: #a342b0;
-  transform: translateY(-2px);
-}
-
-.boton-principal {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  background: linear-gradient(135deg,#6930c3,#5e60ce);
-  box-shadow: 0 8px 20px rgba(105,48,195,0.4);
-  cursor: pointer;
-  transition: transform .2s, box-shadow .3s;
-}
-
-
-.boton-principal:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(105,48,195,0.5);
-}
-
-
-.botones-container {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: auto;
-}
-.botones-container button {
-  flex: 1;
-  padding: 8px 0;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background .3s;
-}
-.edit-btn {
-  background: var(--color-primario);
-  color: #ffffff;
-  width: 60px;
-}
-.edit-btn:hover {
-  background: #217dbb;
-}
-#mis-libros .delete-btn {
-  background: var(--color-peligro);
-  color: #fff;
-}
-#mis-libros .delete-btn:hover {
-  background: var(--color-peligro-h);
-}
-
-/*
-  MODAL DE AJUSTES
-*/
-#modal-ajustes {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 999;
-  background: linear-gradient(135deg,#6a47c9,#5e60ce);
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  width: 90%; max-width: 400px;
-  font-family: 'Poppins',sans-serif;
-  color: #fff;
-}
-#modal-ajustes.oscuro {
-  background: linear-gradient(135deg,#2c2c54,#3e3e78);
-  color: var(--texto-claro);
-}
-#modal-ajustes h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
+/* ========================== MODAL DE AJUSTES ======================================= */
 #modal-ajustes select,
 #modal-ajustes button {
   width: 100%;
@@ -352,6 +263,7 @@ NAVBAR & LOGO
   font-size: 16px;
   cursor: pointer;
 }
+
 #cerrar-ajustes {
   background: var(--color-peligro);
   color: #fff;
@@ -360,37 +272,34 @@ NAVBAR & LOGO
   background: var(--color-peligro-h);
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ========================== ANIMACIONES Y UTILIDADES ====================================== */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.modal-contenido {
-  padding: 20px;
-  border-radius: 8px;
-  min-width: 300px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  text-align: center;
+.fade-in {
+  animation: fadeInDown 0.6s ease-out;
 }
 
+.oculto {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+  height: 0 !important;
+  overflow: hidden;
+  transition: opacity .4s, transform .4s;
+}
 
-/*
-  LOGIN y REGISTRO
-*/
+/* ================= LOGIN Y REGISTRO ==================== */
 body.login-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg,#6a47c9,#5e60ce);
-  font-family: 'Poppins',sans-serif;
+  background: linear-gradient(135deg, #6a47c9, #5e60ce);
+  font-family: 'Poppins', sans-serif;
 }
+
 main {
   max-width: 480px;
   margin: 0 auto;
@@ -399,12 +308,14 @@ main {
   flex-direction: column;
   gap: 20px;
 }
+
 section {
   background: var(--fondo-claro);
   padding: 40px 30px;
   border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
+
 section h2 {
   margin-bottom: 25px;
   font-size: 28px;
@@ -412,19 +323,22 @@ section h2 {
   color: #5e60ce;
   text-align: center;
 }
+
 form input {
   width: 100%;
   padding: 14px 18px;
   margin-bottom: 20px;
   border: 2px solid #ddd;
   border-radius: 10px;
-  transition: border-color .3s, box-shadow .3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
+
 form input:focus {
   border-color: #6930c3;
-  box-shadow: 0 0 8px rgba(105,48,195,0.3);
+  box-shadow: 0 0 8px rgba(105, 48, 195, 0.3);
   outline: none;
 }
+
 form button {
   width: 100%;
   padding: 14px;
@@ -433,15 +347,17 @@ form button {
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  background: linear-gradient(135deg,#6930c3,#5e60ce);
-  box-shadow: 0 8px 20px rgba(105,48,195,0.4);
+  background: linear-gradient(135deg, #6930c3, #5e60ce);
+  box-shadow: 0 8px 20px rgba(105, 48, 195, 0.4);
   cursor: pointer;
-  transition: transform .2s, box-shadow .3s;
+  transition: transform 0.2s, box-shadow 0.3s;
 }
+
 form button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(105,48,195,0.5);
+  box-shadow: 0 12px 26px rgba(105, 48, 195, 0.5);
 }
+
 #toggle-registro,
 #volver-login {
   display: block;
@@ -451,12 +367,14 @@ form button:hover {
   color: #5e60ce;
   font-weight: bold;
   cursor: pointer;
-  transition: color .3s;
+  transition: color 0.3s;
 }
+
 #toggle-registro:hover,
 #volver-login:hover {
   color: #6930c3;
 }
+
 #mensaje {
   color: var(--color-peligro);
   font-size: 14px;
@@ -464,24 +382,22 @@ form button:hover {
   margin: 10px 0 20px;
 }
 
-/*
-  UTILIDADES y RESPONSIVE
-*/
+/* ======================== UTILIDADES Y RESPONSIVE =========================== */
 .oculto {
   display: none !important;
   opacity: 0;
   pointer-events: none;
   height: 0 !important;
   overflow: hidden;
-  transition: opacity .4s, transform .4s;
-}
-body.oscuro footer {
-  background: var(--fondo-oscuro);
-  color: var(--texto-claro);
-  border-top: 2px solid #444;
+  transition: opacity 0.4s, transform 0.4s;
 }
 
+button:focus {
+  outline: 2px solid var(--color-terciario);
+  outline-offset: 2px;
+}
 
+/* =================== FOOTER ====================== */
 footer {
   background: var(--fondo-claro);
   color: var(--texto-oscuro);
@@ -497,45 +413,116 @@ footer {
   justify-content: center;
 }
 
-footer p, footer a {
+body.oscuro footer {
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+  border-top: 2px solid #444;
+}
+
+footer p,
+footer a {
   margin: 5px 0;
   line-height: 1.6;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
   text-align: center;
 }
+
 footer a:hover {
   color: var(--color-secundario);
 }
 
+/* ============== BUSCADOR ================= */
+.buscador-wrapper {
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, #f0f0ff, #eae6ff);
+  display: flex;
+  justify-content: center;
+  box-shadow: var(--sombra-suave);
+  animation: fadeIn 0.5s ease-out;
+}
 
-footer p, footer a {
-  margin: 5px 0;
-  line-height: 1.6;
-  letter-spacing: .3px;
+.buscador-input {
+  width: 100%;
+  max-width: 600px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.buscador-input:focus {
+  border-color: var(--color-terciario);
+  box-shadow: 0 0 10px rgba(105, 48, 195, 0.3);
+  outline: none;
+}
+
+.saludo-usuario {
+  margin-right: 12px;
+  font-weight: 600;
+  color: var(--color-terciario);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ========================= MODAL AJUSTES (POP-UP)============================ */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.popup-contenido {
+  background: linear-gradient(135deg, #6a47c9, #5e60ce);
+  color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: 'Poppins', sans-serif;
+  animation: slideUp 0.4s ease-out;
+}
+
+.popup-contenido h2 {
   text-align: center;
-}
-footer a:hover {
-  color: var(--color-secundario);
+  margin-bottom: 20px;
 }
 
-
-footer p, footer a {
-  margin: 5px 0;
-  line-height: 1.6;
-  letter-spacing: .3px;
-  text-align: center;
+.popup-contenido select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
 }
-footer a:hover {
-  color: var(--color-secundario);
+
+.popup-botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
 }
 
-
-footer p, footer a {
-  margin: 5px 0;
-  line-height: 1.6;
-  letter-spacing: .3px;
-  text-align: center;
+/* =============== ANIMACIONES ======================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-footer a:hover {
-  color: var(--color-secundario);
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
 }
