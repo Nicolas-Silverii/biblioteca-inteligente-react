@@ -1,0 +1,33 @@
+/* =================== FOOTER ====================== */
+footer {
+  background: var(--fondo-claro);
+  color: var(--texto-oscuro);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  padding: 30px 20px;
+  text-align: center;
+  border-top: 2px solid #eee;
+  box-shadow: var(--sombra-suave);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body.oscuro footer {
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+  border-top: 2px solid #444;
+}
+
+footer p,
+footer a {
+  margin: 5px 0;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+
+footer a:hover {
+  color: var(--color-secundario);
+}

@@ -1,0 +1,91 @@
+
+/* ================= LOGIN Y REGISTRO ==================== */
+body.login-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6a47c9, #5e60ce);
+  font-family: 'Poppins', sans-serif;
+}
+
+main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+section {
+  background: var(--fondo-claro);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+section h2 {
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #5e60ce;
+  text-align: center;
+}
+
+form input {
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus {
+  border-color: #6930c3;
+  box-shadow: 0 0 8px rgba(105, 48, 195, 0.3);
+  outline: none;
+}
+
+form button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #6930c3, #5e60ce);
+  box-shadow: 0 8px 20px rgba(105, 48, 195, 0.4);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(105, 48, 195, 0.5);
+}
+
+#toggle-registro,
+#volver-login {
+  display: block;
+  margin: 15px auto 0;
+  background: transparent;
+  border: none;
+  color: #5e60ce;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#toggle-registro:hover,
+#volver-login:hover {
+  color: #6930c3;
+}
+
+#mensaje {
+  color: var(--color-peligro);
+  font-size: 14px;
+  text-align: center;
+  margin: 10px 0 20px;
+}

@@ -1,0 +1,82 @@
+/* ========================== MODAL DE AJUSTES ======================================= */
+#modal-ajustes select,
+#modal-ajustes button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#cerrar-ajustes {
+  background: var(--color-peligro);
+  color: #fff;
+}
+#cerrar-ajustes:hover {
+  background: var(--color-peligro-h);
+}
+
+/* ========================= BOTÓN AJUSTES ================================ */
+#btn-ajustes {
+  composes: boton boton-primario;
+  padding: 8px 14px;
+  font-size: 1rem;
+}
+#btn-ajustes:hover {
+  background: var(--color-secundario);
+  transform: translateY(-2px);
+}
+
+
+/* ========================= MODAL AJUSTES - POP-UP ============================ */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.popup-contenido {
+  background: linear-gradient(135deg, #6a47c9, #5e60ce);
+  color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: 'Poppins', sans-serif;
+  animation: slideUp 0.4s ease-out;
+}
+
+.popup-contenido h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.popup-contenido select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.popup-botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}

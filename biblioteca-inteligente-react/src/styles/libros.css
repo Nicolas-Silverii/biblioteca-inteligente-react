@@ -1,0 +1,113 @@
+/* ========================== SECCIÓN “MIS LIBROS” ============================ */
+#mis-libros {
+  background: var(--fondo-claro);
+  padding: 40px 20px;
+  max-width: 1400px;
+  margin: 30px auto;
+  border-radius: 10px;
+  box-shadow: var(--sombra-media);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#mis-libros h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  background: linear-gradient(135deg, #6a47c9, #cb54c3);
+  padding: 16px 32px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+  isolation: isolate;
+  animation: fadeInDown 0.6s ease-out;
+}
+#mis-libros h2::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(0,0,0,0.05));
+  z-index: -1;
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+#mis-libros .grid-libros {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  background: var(--fondo-claro);
+  border-radius: 8px;
+  box-shadow: var(--sombra-suave);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  #mis-libros .grid-libros {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  #mis-libros .grid-libros {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =============TARJETAS DE LIBROS ================== */
+.book-card,
+.libro-favorito {
+  display: flex;
+  flex-direction: column;
+  background: var(--fondo-claro);
+  border-radius: 8px;
+  box-shadow: var(--sombra-media);
+  padding: 15px;
+  text-align: center;
+  transition: transform .3s;
+  height: 100%;
+}
+.book-card img,
+.libro-favorito img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.book-card h3,
+.libro-favorito h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-primario);
+  line-height: 1.4em;
+  max-height: calc(1.4em * 2);
+  overflow: hidden;
+  transition: color .3s, transform .3s;
+}
+.book-card h3:hover,
+.libro-favorito h3:hover {
+  color: var(--color-secundario);
+  transform: scale(1.05);
+}
+.book-card p,
+.libro-favorito p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: .95rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 15px;
+  letter-spacing: .5px;
+  font-style: italic;
+  flex: 1;
+}
+

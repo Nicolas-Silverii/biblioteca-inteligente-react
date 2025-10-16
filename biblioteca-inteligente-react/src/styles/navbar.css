@@ -1,0 +1,98 @@
+/* ====================== NAVBAR & LOGO =================== */
+#logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 140px;
+  background: var(--fondo-claro);
+  padding: 20px 0;
+}
+#logo {
+  max-height: 140px;
+  object-fit: contain;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  background: var(--fondo-claro);
+  padding: 10px 20px;
+  box-shadow: var(--sombra-suave);
+}
+.navbar-list {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  list-style: none;
+}
+.empujar-derecha {
+  margin-left: auto;
+}
+
+/* ==================== BOTONES DE NAVEGACIÓN ============================= */
+.nav-btn {
+  background: transparent;
+  border: 2px solid var(--color-primario);
+  color: var(--color-primario);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  transition: background .3s, color .3s, transform .2s;
+}
+.nav-btn:hover {
+  background: var(--color-primario);
+  color: #fff;
+  transform: translateY(-2px);
+}
+.nav-btn:disabled {
+  background: var(--color-primario);
+  color: #fff;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================== BUSCADOR ==================================== */
+.search-container {
+  margin-left: 20px;
+}
+.search-container input {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.buscador-wrapper {
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, #f0f0ff, #eae6ff);
+  display: flex;
+  justify-content: center;
+  box-shadow: var(--sombra-suave);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.buscador-input {
+  width: 100%;
+  max-width: 600px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.buscador-input:focus {
+  border-color: var(--color-terciario);
+  box-shadow: 0 0 10px rgba(105, 48, 195, 0.3);
+  outline: none;
+}
+
+.saludo-usuario {
+  margin-right: 12px;
+  font-weight: 600;
+  color: var(--color-terciario);
+  font-family: 'Poppins', sans-serif;
+}
