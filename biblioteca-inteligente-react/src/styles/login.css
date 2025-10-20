@@ -9,13 +9,11 @@ body.login-page {
 }
 
 main {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
 }
+
 
 section {
   background: var(--fondo-claro);

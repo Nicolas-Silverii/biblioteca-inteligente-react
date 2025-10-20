@@ -2,26 +2,22 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import ModalAjustes from "../components/ModalAjustes";
 import Card from "../components/Card";
+import librosData from "../data/libros.json"
 
 function Biblioteca({ usuario, irA, cerrarSesion }) {
   const [mostrarAjustes, setMostrarAjustes] = useState(false);
   const [libros, setLibros] = useState([]);
 
-  useEffect(() => {
-    const cargarLibros = async () => {
-      try {
-        const respuesta = await fetch("/data/libros.json");
-        const librosJson = await respuesta.json();
+useEffect(() => {
+  const favoritos = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
 
-        const favoritos = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
-        setLibros([...librosJson, ...favoritos]);
-      } catch (error) {
-        console.error("Error al cargar libros:", error);
-      }
-    };
+  const idsFavoritos = favoritos.map((libro) => libro.id);
+  const librosFiltrados = librosData.filter((libro) => !idsFavoritos.includes(libro.id));
 
-    cargarLibros();
-  }, []);
+  setLibros([...librosFiltrados, ...favoritos]);
+}, []);
+
+
 
   return (
     <>

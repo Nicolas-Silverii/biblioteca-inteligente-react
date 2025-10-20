@@ -1,10 +1,11 @@
 function Card({ titulo, autor, imagen, descripcion }) {
   return (
-    <div className="card">
-      <img src={imagen} alt={titulo} className="card-img" />
+    <div className="book-card">
+      <img src={imagen} alt={`Portada de ${titulo}`} />
       <h3>{titulo}</h3>
-      <p><strong>Autor:</strong> {autor}</p>
-      <p>{descripcion}</p>
+      <p className="autor">{autor}</p>
+      <p className="descripcion">{descripcion}</p>
+      <button className="boton-primario">Agregar a favoritos</button>
     </div>
   );
 }
