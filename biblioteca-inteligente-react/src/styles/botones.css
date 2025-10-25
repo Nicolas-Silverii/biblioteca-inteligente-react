@@ -24,3 +24,15 @@
   background: var(--color-peligro-h);
 }
 
+.boton-secundario {
+  background: transparent;
+  color: var(--color-terciario);
+  font-size: 15px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.boton-secundario:hover {
+  color: var(--color-secundario);
+  transform: translateY(-1px);
+}

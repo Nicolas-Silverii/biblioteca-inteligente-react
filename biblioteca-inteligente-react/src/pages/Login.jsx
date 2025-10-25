@@ -122,13 +122,7 @@ function Login({ onLoginExitoso }) {
         </main>
       </div>
 
-      {/* Footer con info legal */}
-      <footer className="footer-login">
-        <p>© 2025 Biblioteca Interactiva – Todos los derechos reservados</p>
-        <p>
-          <a href="#">Términos y condiciones</a> | <a href="#">Política de privacidad</a>
-        </p>
-      </footer>
+     
     </>
   );
 }
