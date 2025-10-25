@@ -10,17 +10,17 @@ const Modal = ({ mensaje, tipo = "info", onClose }) => {
   const iconos = {
     info: "ℹ️",     // Informativo
     error: "❌",    // Error
-    confirm: "✅",  // Confirmación o éxito
+    confirm: "✅",  // Confirmación 
   };
 
   return (
     <div className="popup-overlay">
       <div className={`popup-contenido modal-${tipo}`}>
         <p className="modal-mensaje">
-          {/* Mostramos el ícono correspondiente y el mensaje */}
+          {/* Se muestra el ícono correspondiente y el mensaje */}
           <span className="modal-icono">{iconos[tipo]}</span> {mensaje}
         </p>
-        {/* Botón para cerrar el modal */}
+        {/* botón cerrar modal */}
         <button className="boton boton-primario" onClick={onClose}>
           Cerrar
         </button>
