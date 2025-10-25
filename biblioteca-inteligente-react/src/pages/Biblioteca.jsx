@@ -1,23 +1,60 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import ModalAjustes from "../components/ModalAjustes";
+import Modal from "../components/Modal";
 import Card from "../components/Card";
-import librosData from "../data/libros.json"
+import librosData from "../data/libros.json";
+import "../styles/main.css";
 
 function Biblioteca({ usuario, irA, cerrarSesion }) {
   const [mostrarAjustes, setMostrarAjustes] = useState(false);
   const [libros, setLibros] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
+  const [mensajeModal, setMensajeModal] = useState("");
+  const [tipoModal, setTipoModal] = useState("info");
+  const [mostrarModal, setMostrarModal] = useState(false);
 
-useEffect(() => {
-  const favoritos = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
+  useEffect(() => {
+    const favoritos = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
+    const idsFavoritos = favoritos.map((libro) => libro.id);
+    const librosFiltrados = librosData.filter((libro) => !idsFavoritos.includes(libro.id));
+    setLibros(librosFiltrados);
+  }, []);
 
-  const idsFavoritos = favoritos.map((libro) => libro.id);
-  const librosFiltrados = librosData.filter((libro) => !idsFavoritos.includes(libro.id));
+  const agregarAFavoritos = (libro) => {
+    const favoritos = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
 
-  setLibros([...librosFiltrados, ...favoritos]);
-}, []);
+    const existe = favoritos.some(
+      (fav) =>
+        fav.titulo.toLowerCase() === libro.titulo.toLowerCase() &&
+        fav.autor.toLowerCase() === libro.autor.toLowerCase()
+    );
 
+    if (existe) {
+      setMensajeModal("Ese libro ya está en tus favoritos.");
+      setTipoModal("error");
+      setMostrarModal(true);
+      return;
+    }
 
+    const nuevoLibro = {
+      ...libro,
+      id: Date.now(),
+      año: libro.año || new Date().getFullYear(),
+    };
+
+    const actualizados = [...favoritos, nuevoLibro];
+    localStorage.setItem("librosFavoritos", JSON.stringify(actualizados));
+
+    setMensajeModal("¡Libro agregado a favoritos!");
+    setTipoModal("confirm");
+    setMostrarModal(true);
+  };
+
+  const librosFiltrados = libros.filter((libro) =>
+    libro.titulo.toLowerCase().includes(busqueda.toLowerCase()) ||
+    libro.autor.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
   return (
     <>
@@ -28,26 +65,39 @@ useEffect(() => {
         mostrarBuscador={true}
         onAjustes={() => setMostrarAjustes(true)}
         usuario={usuario}
+        busqueda={busqueda}
+        setBusqueda={setBusqueda}
       />
 
       <main>
         <section id="mis-libros">
           <h2>BIBLIOTECA</h2>
           <div id="lista-libros" className="grid-libros">
-            {libros.map((libro) => (
-              <Card
-                key={libro.id || libro.titulo}
-                titulo={libro.titulo}
-                autor={libro.autor}
-                imagen={libro.imagen}
-                descripcion={`Publicado en ${libro.año || "fecha desconocida"}`}
-              />
-            ))}
+            {librosFiltrados.length > 0 ? (
+              librosFiltrados.map((libro) => (
+                <Card
+                  key={libro.titulo + libro.autor}
+                  titulo={libro.titulo}
+                  autor={libro.autor}
+                  imagen={libro.imagen}
+                  descripcion={`Publicado en ${libro.año || "fecha desconocida"}`}
+                  onAgregar={() => agregarAFavoritos(libro)}
+                />
+              ))
+            ) : (
+              <p>No se encontraron libros con ese criterio.</p>
+            )}
           </div>
         </section>
 
         <ModalAjustes visible={mostrarAjustes} onClose={() => setMostrarAjustes(false)} />
-
+        {mostrarModal && (
+          <Modal
+            mensaje={mensajeModal}
+            tipo={tipoModal}
+            onClose={() => setMostrarModal(false)}
+          />
+        )}
       </main>
 
       <footer>
