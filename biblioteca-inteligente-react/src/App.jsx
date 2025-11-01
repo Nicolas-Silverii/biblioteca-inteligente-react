@@ -6,13 +6,13 @@ import Biblioteca from "./pages/Biblioteca";
 import { useAuth } from "./hooks/useAuth";
 import "./styles/main.css";
 
-// Componente que maneja la lógica de sesión y navegación protegida
-function AppWrapper() {
-  const { getUsuarioActual, logout } = useAuth(); // Hook personalizado para manejar autenticación
-  const [usuarioActivo, setUsuarioActivo] = useState(null); // Estado local para guardar el usuario logueado
-  const navigate = useNavigate(); // Hook para redireccionar entre rutas
+// Componente que gestiona rutas y estado global
+function AppWrapper({ tema, setTema, fuente, setFuente }) {
+  const { getUsuarioActual, logout } = useAuth();
+  const [usuarioActivo, setUsuarioActivo] = useState(null);
+  const navigate = useNavigate();
 
-  // Cuando se abre la app, revisamos si ya hay un usuario guardado
+  // Al iniciar, verificamos si hay usuario logueado
   useEffect(() => {
     const usuario = getUsuarioActual();
     if (usuario) {
@@ -20,67 +20,98 @@ function AppWrapper() {
     }
   }, []);
 
-  // Cierra la sesión y redirige al login
+  // Aplicar clases al body según tema y fuente + guardar preferencias
+  useEffect(() => {
+    const clasesBase = ["login-page", tema, `fuente-${fuente}`];
+    document.body.className = clasesBase.join(" ");
+
+    // Guardamos preferencias en localStorage
+    localStorage.setItem("preferenciaTema", tema);
+    localStorage.setItem("preferenciaFuente", fuente);
+  }, [tema, fuente]);
+
   const cerrarSesion = () => {
     logout();
     setUsuarioActivo(null);
     navigate("/");
   };
 
-  // Función para navegar entre vistas internas
   const irA = (ruta) => navigate(`/${ruta}`);
 
   return (
     <Routes>
-      {/* Ruta raíz: siempre muestra el login. Al iniciar sesión, redirige a la biblioteca */}
       <Route
         path="/"
         element={
           <Login
             onLoginExitoso={(usuario) => {
               setUsuarioActivo(usuario);
-              navigate("/biblioteca"); // Redirige a la biblioteca al iniciar sesión
+              navigate("/biblioteca");
             }}
+            tema={tema}
+            setTema={setTema}
+            fuente={fuente}
+            setFuente={setFuente}
           />
         }
       />
-
-      {/* Ruta del perfil: protegida, solo accesible si hay usuario */}
       <Route
         path="/perfil"
         element={
           usuarioActivo ? (
-            <Perfil usuario={usuarioActivo} irA={irA} cerrarSesion={cerrarSesion} />
+            <Perfil
+              usuario={usuarioActivo}
+              irA={irA}
+              cerrarSesion={cerrarSesion}
+              tema={tema}
+              setTema={setTema}
+              fuente={fuente}
+              setFuente={setFuente}
+            />
           ) : (
             <Navigate to="/" />
           )
         }
       />
-
-      {/* Ruta de la biblioteca: también protegida */}
       <Route
         path="/biblioteca"
         element={
           usuarioActivo ? (
-            <Biblioteca usuario={usuarioActivo} irA={irA} cerrarSesion={cerrarSesion} />
+            <Biblioteca
+              usuario={usuarioActivo}
+              irA={irA}
+              cerrarSesion={cerrarSesion}
+              tema={tema}
+              setTema={setTema}
+              fuente={fuente}
+              setFuente={setFuente}
+            />
           ) : (
             <Navigate to="/" />
           )
         }
       />
-
-      {/* Cualquier ruta desconocida redirige al login */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
 
-// // Usamos BrowserRouter para que la app tenga navegación fluida entre rutas
-
+// Componente principal que inicializa tema y fuente desde localStorage
 export default function App() {
+  const temaInicial = localStorage.getItem("preferenciaTema") || "claro";
+  const fuenteInicial = localStorage.getItem("preferenciaFuente") || "mediana";
+
+  const [tema, setTema] = useState(temaInicial);
+  const [fuente, setFuente] = useState(fuenteInicial);
+
   return (
     <BrowserRouter>
-      <AppWrapper />
+      <AppWrapper
+        tema={tema}
+        setTema={setTema}
+        fuente={fuente}
+        setFuente={setFuente}
+      />
     </BrowserRouter>
   );
 }

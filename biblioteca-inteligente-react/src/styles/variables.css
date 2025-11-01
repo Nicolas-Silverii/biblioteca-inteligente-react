@@ -1,19 +1,48 @@
-/* ============ VARIABLES & RESETEO ========== */
 :root {
   --color-primario:   #3498db;
   --color-secundario: #cb54c3;
   --color-terciario:  #6a47c9;
   --color-peligro:    #e74c3c;
   --color-peligro-h:  #c0392b;
+
   --fondo-claro:      #fff;
   --fondo-oscuro:     #222;
   --texto-claro:      #eee;
   --texto-oscuro:     #333;
+
+  --fondo-logo:       #ffffff;
+  --fondo-titulo-libros: linear-gradient(135deg, #6a47c9, #cb54c3);
+
   --sombra-suave:     0 0 10px rgba(0,0,0,0.05);
   --sombra-media:     0 4px 8px rgba(0,0,0,0.1);
+
   --fuente-chica:     14px;
   --fuente-mediana:   16px;
   --fuente-grande:    18px;
+}
+
+body.claro {
+  background-color: var(--fondo-claro);
+  color: var(--texto-oscuro);
+  --fondo-logo: var(--fondo-claro);
+  --fondo-titulo-libros: linear-gradient(135deg, #6a47c9, #cb54c3);
+}
+
+body.oscuro {
+  background-color: var(--fondo-oscuro);
+  color: var(--texto-claro);
+  --fondo-logo: #1a1a1a;
+  --fondo-titulo-libros: linear-gradient(135deg, #444, #222);
+}
+
+body.fuente-chica {
+  font-size: var(--fuente-chica);
+}
+body.fuente-mediana {
+  font-size: var(--fuente-mediana);
+}
+body.fuente-grande {
+  font-size: var(--fuente-grande);
 }
 
 * {
@@ -22,16 +51,8 @@
   box-sizing: border-box;
 }
 
-/* ================CUERPO Y TEMAS===============*/
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background: #f4f4f4;
-  color: var(--texto-oscuro);
-  transition: background .3s, color .3s, font-size .3s;
+  transition: background 0.3s, color 0.3s, font-size 0.3s;
   overflow-x: hidden;
 }
-body.claro            { background-color: white; }
-body.oscuro           { background: var(--fondo-oscuro); color: var(--texto-claro); }
-body.fuente-chica     { font-size: var(--fuente-chica); }
-body.fuente-mediana   { font-size: var(--fuente-mediana); }
-body.fuente-grande    { font-size: var(--fuente-grande); }
