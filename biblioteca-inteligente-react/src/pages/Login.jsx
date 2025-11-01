@@ -1,60 +1,45 @@
-import React, { useState, useEffect } from "react";
-import Input from "../components/Input"; 
-import Button from "../components/Button"; 
-import Modal from "../components/Modal"; 
+import React, { useState } from "react";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import Modal from "../components/Modal";
+import ModalAjustes from "../components/ModalAjustes";
 import { useAuth } from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import "../styles/main.css";
 
-function Login({ onLoginExitoso }) {
-  // Estados para los campos del formulario
+function Login({ onLoginExitoso, tema, setTema, fuente, setFuente }) {
   const [usuario, setUsuario] = useState("");
   const [clave, setClave] = useState("");
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-
-  // Estado para alternar entre login y registro
   const [modoRegistro, setModoRegistro] = useState(false);
-
-  // Estado para mostrar el modal con mensajes
   const [mostrarModal, setMostrarModal] = useState(false);
   const [mensaje, setMensaje] = useState("");
+  const [mostrarAjustes, setMostrarAjustes] = useState(false);
 
-  // Traemos funciones del hook de autenticación
   const { login, register, loading, error } = useAuth();
   const navigate = useNavigate();
 
-  // Cuando se monta el componente, le damos estilo al body
-  useEffect(() => {
-    document.body.className = "login-page claro fuente-mediana";
-    return () => {
-      document.body.className = "";
-    };
-  }, []);
-
-  // Función que se ejecuta al enviar el formulario de login
   const enviarInicioSesion = async (e) => {
     e.preventDefault();
     const result = await login(usuario, clave);
     if (result.success) {
       setMensaje(`¡Bienvenido, ${result.user.nombre || "usuario"}!`);
       setMostrarModal(true);
-      onLoginExitoso(result.user); // Guardamos el usuario en App.jsx
-      setTimeout(() => navigate("/perfil"), 1500); // Redirigimos al perfil
+      onLoginExitoso(result.user);
+      setTimeout(() => navigate("/perfil"), 1500);
     } else {
       setMensaje(error || "Error al iniciar sesión");
       setMostrarModal(true);
     }
   };
 
-  // Función que se ejecuta al enviar el formulario de registro
   const enviarRegistro = async (e) => {
     e.preventDefault();
     const result = await register(nombre, apellido, usuario, clave);
     setMensaje(result.message || "Error al registrarse");
     setMostrarModal(true);
     if (result.success) {
-      // Si se registró bien, volvemos al modo login y limpiamos los campos
       setModoRegistro(false);
       setNombre("");
       setApellido("");
@@ -63,7 +48,6 @@ function Login({ onLoginExitoso }) {
     }
   };
 
-  // Cierra el modal y, si el mensaje fue de éxito, vuelve al login
   const cerrarModal = () => {
     setMostrarModal(false);
     if (mensaje.includes("Registro exitoso")) {
@@ -73,15 +57,13 @@ function Login({ onLoginExitoso }) {
 
   return (
     <>
-      {/* Logo de la app */}
-      <div className="logo-libropolis">
-        <img src="/img/logo2.png" alt="Logo Libropolis" />
+      <div className="logo-login">
+        <img id="logo-login" src="/img/logo2.png" alt="Logo de login" />
       </div>
 
       <div className="login-wrapper">
         <main>
           <section id="seccion-inicio">
-            {/* Alternamos entre login y registro */}
             {!modoRegistro ? (
               <>
                 <h2>Iniciar sesión</h2>
@@ -114,7 +96,6 @@ function Login({ onLoginExitoso }) {
               </>
             )}
 
-            {/* Modal para mostrar mensajes de éxito o error */}
             {mostrarModal && (
               <Modal mensaje={mensaje} tipo={mensaje.includes("exitoso") ? "confirm" : "error"} onClose={cerrarModal} />
             )}
@@ -122,7 +103,14 @@ function Login({ onLoginExitoso }) {
         </main>
       </div>
 
-     
+      <ModalAjustes
+        visible={mostrarAjustes}
+        onClose={() => setMostrarAjustes(false)}
+        tema={tema}
+        setTema={setTema}
+        fuente={fuente}
+        setFuente={setFuente}
+      />
     </>
   );
 }

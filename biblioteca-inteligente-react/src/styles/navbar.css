@@ -1,14 +1,12 @@
-/* ====================== NAVBAR & LOGO =================== */
 #logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 140px;
-  background: var(--fondo-claro);
-  padding: 20px 0;
+  background-color: var(--fondo-logo);
+  padding: 20px;
+  text-align: center;
 }
-#logo {
-  max-height: 140px;
+
+#logo-navbar {
+  max-width: 200px;
+  height: auto;
   object-fit: contain;
 }
 
@@ -19,6 +17,7 @@
   padding: 10px 20px;
   box-shadow: var(--sombra-suave);
 }
+
 .navbar-list {
   display: flex;
   gap: 20px;
@@ -26,11 +25,11 @@
   width: 100%;
   list-style: none;
 }
+
 .empujar-derecha {
   margin-left: auto;
 }
 
-/* ==================== BOTONES DE NAVEGACIÓN ============================= */
 .nav-btn {
   background: transparent;
   border: 2px solid var(--color-primario);
@@ -39,13 +38,15 @@
   border-radius: 6px;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
-  transition: background .3s, color .3s, transform .2s;
+  transition: background 0.3s, color 0.3s, transform 0.2s;
 }
+
 .nav-btn:hover {
   background: var(--color-primario);
   color: #fff;
   transform: translateY(-2px);
 }
+
 .nav-btn:disabled {
   background: var(--color-primario);
   color: #fff;
@@ -53,10 +54,10 @@
   cursor: not-allowed;
 }
 
-/* =========================== BUSCADOR ==================================== */
 .search-container {
   margin-left: 20px;
 }
+
 .search-container input {
   padding: 6px 10px;
   border-radius: 4px;

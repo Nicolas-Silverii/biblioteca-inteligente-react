@@ -6,7 +6,7 @@ import Card from "../components/Card";
 import librosData from "../data/libros.json";
 import "../styles/main.css";
 
-function Biblioteca({ usuario, irA, cerrarSesion }) {
+function Biblioteca({ usuario, irA, cerrarSesion, tema, setTema, fuente, setFuente }) {
   const [mostrarAjustes, setMostrarAjustes] = useState(false);
   const [libros, setLibros] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -90,7 +90,14 @@ function Biblioteca({ usuario, irA, cerrarSesion }) {
           </div>
         </section>
 
-        <ModalAjustes visible={mostrarAjustes} onClose={() => setMostrarAjustes(false)} />
+        <ModalAjustes
+          visible={mostrarAjustes}
+          onClose={() => setMostrarAjustes(false)}
+          tema={tema}
+          setTema={setTema}
+          fuente={fuente}
+          setFuente={setFuente}
+        />
         {mostrarModal && (
           <Modal
             mensaje={mensajeModal}
