@@ -1,7 +1,7 @@
-import React from "react";
-import "../styles/modal.css"; 
+import Button from "./Button";         
+import "../styles/modal.css";         
 
-// Muestra un mensaje emergente con un ícono y un botón para cerrar
+// m uestra un mensaje emergente con ícono y botón para cerrar
 const Modal = ({ mensaje, tipo = "info", onClose }) => {
   // Si no hay mensaje, no se muestra nada
   if (!mensaje) return null;
@@ -14,16 +14,16 @@ const Modal = ({ mensaje, tipo = "info", onClose }) => {
   };
 
   return (
-    <div className="popup-overlay">
+    // Fondo oscuro que cubre toda la pantalla
+    <div className="popup-overlay" role="alertdialog" aria-labelledby="modal-mensaje">
+      {/* Contenedor del contenido del modal */}
       <div className={`popup-contenido modal-${tipo}`}>
-        <p className="modal-mensaje">
-          {/* Se muestra el ícono correspondiente y el mensaje */}
+        {/* Mensaje con ícono */}
+        <p id="modal-mensaje" className="modal-mensaje">
           <span className="modal-icono">{iconos[tipo]}</span> {mensaje}
         </p>
-        {/* botón cerrar modal */}
-        <button className="boton boton-primario" onClick={onClose}>
-          Cerrar
-        </button>
+        {/* Botón para cerrar el modal */}
+        <Button text="Cerrar" onClick={onClose} variant="primario" />
       </div>
     </div>
   );

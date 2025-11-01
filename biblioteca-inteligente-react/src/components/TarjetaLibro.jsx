@@ -1,6 +1,7 @@
 import { useState } from "react";
+import Button from "./Button";
 
-// Representa una tarjeta de libro, con su info y un botón para eliminarlo
+// Representa una tarjeta de libro
 function TarjetaLibro({ titulo, autor, imagen, año, id, onEliminar }) {
   // Estado local para saber si la tarjeta está visible o no
   const [visible, setVisible] = useState(true);
@@ -8,9 +9,7 @@ function TarjetaLibro({ titulo, autor, imagen, año, id, onEliminar }) {
   // Se ejecuta al apretar el botón de eliminar
   const eliminarLibro = () => {
     // Si se pasa una función para eliminar desde el padre, la llamamos con el id del libro
-    if (onEliminar) {
-      onEliminar(id); 
-    }
+    if (onEliminar) onEliminar(id);
     // Ocultar tarjeta (no la borramos del DOM, solo la dejamos de mostrar)
     setVisible(false);
   };
@@ -20,20 +19,24 @@ function TarjetaLibro({ titulo, autor, imagen, año, id, onEliminar }) {
 
   // Tarjeta con toda la info del libro
   return (
-    <div className="libro-favorito tarjeta-libro">
+    <div className="libro-favorito tarjeta-libro" role="article" aria-label={`Libro: ${titulo}`}>
       {/* Imagen */}
       <img src={imagen} alt={`Portada de ${titulo}`} />
-      {/* Título del libro*/}
+      {/* Título del libro */}
       <h3>{titulo}</h3>
       {/* Autor */}
       <p className="autor">{autor}</p>
       {/* Año de publicación */}
       <p className="descripcion">Publicado en {año}</p>
       {/* Botón para eliminar el libro */}
-      <button className="boton-primario" onClick={eliminarLibro}>
-        🗑 Eliminar
-      </button>
+      <Button
+        text="🗑 Eliminar"
+        onClick={eliminarLibro}
+        variant="primario"
+        ariaLabel={`Eliminar ${titulo}`}
+      />
     </div>
   );
 }
+
 export default TarjetaLibro;
