@@ -1,38 +1,50 @@
-/* ========== LOGIN Y REGISTRO ========== */
+/* Estilos generales para la página de login */
 body.login-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg, #6a47c9, #5e60ce);
+  background-color: var(--fondo-claro); /* fondo claro por defecto */
   font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease;
 }
 
+/* Fondo oscuro si el tema es oscuro */
+body.login-page.oscuro {
+  background-color: var(--fondo-oscuro);
+}
+
+/* Contenedores principales centrados */
 main,
 .login-wrapper,
-.logo-login,
-.logo-libropolis {
+.logo-login {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-main {
-  padding: 20px;
-}
-
+/* Wrapper del login */
 .login-wrapper {
   flex: 1;
-  padding-bottom: 40px;
+  padding: 20px 0 40px;
 }
 
+/* Sección del formulario */
 section {
   background: var(--fondo-claro);
   padding: 30px 24px;
   border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--sombra-media);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Fondo oscuro para la sección */
+body.oscuro section {
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
+}
+
+/* Título del formulario */
 section h2 {
   margin-bottom: 20px;
   font-size: 24px;
@@ -41,6 +53,7 @@ section h2 {
   text-align: center;
 }
 
+/* Campos de entrada */
 form input {
   width: 100%;
   padding: 12px 16px;
@@ -50,12 +63,21 @@ form input {
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+/* Estilo al enfocar */
 form input:focus {
   border-color: #6930c3;
   box-shadow: 0 0 6px rgba(105, 48, 195, 0.3);
   outline: none;
 }
 
+/* Fondo oscuro para inputs */
+body.oscuro form input {
+  background-color: #333;
+  color: var(--texto-claro);
+  border-color: #555;
+}
+
+/* Botón principal */
 form button {
   width: 100%;
   padding: 12px;
@@ -70,11 +92,13 @@ form button {
   transition: transform 0.2s, box-shadow 0.3s;
 }
 
+/* Hover del botón */
 form button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(105, 48, 195, 0.5);
 }
 
+/* Botones de alternancia entre login y registro */
 #toggle-registro,
 #volver-login {
   display: block;
@@ -92,6 +116,7 @@ form button:hover {
   color: #6930c3;
 }
 
+/* Mensaje de error o confirmación */
 #mensaje {
   color: var(--color-peligro);
   font-size: 13px;
@@ -99,21 +124,14 @@ form button:hover {
   margin: 8px 0 16px;
 }
 
-.logo-login,
-.logo-libropolis {
-  margin: 40px 0 20px;
-  animation: fadeIn 0.6s ease-out;
-}
-
-.logo-login img,
-.logo-libropolis img {
-  max-width: 240px;
+/* Logo animado */
+.logo-login img {
+  width: 320px;
   height: auto;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
   transition: transform 0.3s ease;
 }
 
-.logo-login img:hover,
-.logo-libropolis img:hover {
+.logo-login img:hover {
   transform: scale(1.05);
 }
