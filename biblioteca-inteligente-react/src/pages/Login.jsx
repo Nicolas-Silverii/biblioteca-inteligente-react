@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import Modal from "../components/Modal";
 import ModalAjustes from "../components/ModalAjustes";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -13,45 +12,38 @@ function Login({ onLoginExitoso, tema, setTema, fuente, setFuente }) {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [modoRegistro, setModoRegistro] = useState(false);
-  const [mostrarModal, setMostrarModal] = useState(false);
   const [mensaje, setMensaje] = useState("");
+  const [tipoMensaje, setTipoMensaje] = useState("error");
   const [mostrarAjustes, setMostrarAjustes] = useState(false);
 
-  const { login, register, loading, error } = useAuth();
+  const { login, register, loading } = useAuth();
   const navigate = useNavigate();
 
   const enviarInicioSesion = async (e) => {
     e.preventDefault();
     const result = await login(usuario, clave);
     if (result.success) {
-      setMensaje(`¡Bienvenido, ${result.user.nombre || "usuario"}!`);
-      setMostrarModal(true);
+      setMensaje(result.message);
+      setTipoMensaje("confirm");
       onLoginExitoso(result.user);
-      setTimeout(() => navigate("/perfil"), 1500);
+      setTimeout(() => navigate("/biblioteca"), 1500);
     } else {
-      setMensaje(error || "Error al iniciar sesión");
-      setMostrarModal(true);
+      setMensaje(result.message);
+      setTipoMensaje("error");
     }
   };
 
   const enviarRegistro = async (e) => {
     e.preventDefault();
     const result = await register(nombre, apellido, usuario, clave);
-    setMensaje(result.message || "Error al registrarse");
-    setMostrarModal(true);
+    setMensaje(result.message);
+    setTipoMensaje(result.success ? "confirm" : "error");
     if (result.success) {
       setModoRegistro(false);
       setNombre("");
       setApellido("");
       setUsuario("");
       setClave("");
-    }
-  };
-
-  const cerrarModal = () => {
-    setMostrarModal(false);
-    if (mensaje.includes("Registro exitoso")) {
-      setModoRegistro(false);
     }
   };
 
@@ -73,6 +65,7 @@ function Login({ onLoginExitoso, tema, setTema, fuente, setFuente }) {
                   <div className="botones-login">
                     <Button text={loading ? "Cargando..." : "Ingresar"} type="submit" disabled={loading} />
                   </div>
+                  {mensaje && <p className={`mensaje-feedback ${tipoMensaje}`}>{mensaje}</p>}
                 </form>
                 <button className="boton boton-secundario" onClick={() => setModoRegistro(true)}>
                   ¿No tenés cuenta? Registrate acá
@@ -89,15 +82,12 @@ function Login({ onLoginExitoso, tema, setTema, fuente, setFuente }) {
                   <div className="botones-login">
                     <Button text={loading ? "Cargando..." : "Registrarme"} type="submit" disabled={loading} />
                   </div>
+                  {mensaje && <p className={`mensaje-feedback ${tipoMensaje}`}>{mensaje}</p>}
                 </form>
                 <button className="boton boton-secundario" onClick={() => setModoRegistro(false)}>
                   ¿Ya tenés cuenta? Volver al login
                 </button>
               </>
-            )}
-
-            {mostrarModal && (
-              <Modal mensaje={mensaje} tipo={mensaje.includes("exitoso") ? "confirm" : "error"} onClose={cerrarModal} />
             )}
           </section>
         </main>

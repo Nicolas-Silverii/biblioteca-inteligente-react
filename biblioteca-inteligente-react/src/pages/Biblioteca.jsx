@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import ModalAjustes from "../components/ModalAjustes";
-import Modal from "../components/Modal";
 import Card from "../components/Card";
 import librosData from "../data/libros.json";
 import "../styles/main.css";
