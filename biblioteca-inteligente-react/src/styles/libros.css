@@ -1,5 +1,3 @@
-/* ========================== SECCIÓN “MIS LIBROS” ============================ */
-
 #mis-libros {
   background: var(--fondo-claro);
   padding: 40px 20px;
@@ -10,6 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #mis-libros h2 {
@@ -19,7 +18,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   color: #fff;
-  background: linear-gradient(135deg, #6a47c9, #cb54c3);
+  background: var(--fondo-titulo-libros);
   padding: 16px 32px;
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
@@ -52,10 +51,8 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-
-/* ========================== TARJETAS DE LIBROS ============================ */
 
 .book-card,
 .libro-favorito {
@@ -68,7 +65,7 @@
   box-shadow: var(--sombra-media);
   padding: 20px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   height: 100%;
   width: 100%;
   max-width: 280px;
@@ -90,7 +87,6 @@
   margin-bottom: 16px;
 }
 
-/* Título */
 .book-card h3,
 .libro-favorito h3 {
   font-family: 'Poppins', sans-serif;
@@ -100,14 +96,12 @@
   margin-bottom: 10px;
   line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 240px;
 }
 
-/* Autor */
 .book-card .autor,
 .libro-favorito .autor {
   font-size: 0.95rem;
@@ -118,7 +112,6 @@
   max-width: 240px;
 }
 
-/* Descripción */
 .book-card .descripcion,
 .libro-favorito .descripcion {
   font-size: 0.9rem;
@@ -131,7 +124,6 @@
   max-width: 240px;
 }
 
-/* Botón */
 .book-card .boton-primario,
 .libro-favorito .boton-primario {
   margin-top: auto;
@@ -149,4 +141,38 @@
 .book-card .boton-primario:hover,
 .libro-favorito .boton-primario:hover {
   background-color: var(--color-secundario);
+}
+
+/* Tema oscuro aplicado a secciones principales */
+body.oscuro #mis-libros,
+body.oscuro .grid-libros,
+body.oscuro .book-card,
+body.oscuro .libro-favorito {
+  background-color: var(--fondo-oscuro);
+  color: var(--texto-claro);
+}
+
+/* Tema oscuro para títulos decorativos */
+body.oscuro #mis-libros h2 {
+  background: var(--fondo-titulo-libros); /* ya se redefine en variables.css */
+  color: var(--texto-claro);
+}
+
+/* Tema oscuro para descripciones */
+body.oscuro .descripcion {
+  color: #ccc;
+}
+
+/* Tema oscuro para inputs y botones si los usás en esta vista */
+body.oscuro input,
+body.oscuro textarea {
+  background-color: #333;
+  color: var(--texto-claro);
+  border-color: #555;
+}
+
+body.oscuro input:focus,
+body.oscuro textarea:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 6px rgba(105, 48, 195, 0.4);
 }

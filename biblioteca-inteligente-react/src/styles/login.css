@@ -1,36 +1,44 @@
-/* ========== LOGIN Y REGISTRO ========== */
+/* ======================= LOGIN PAGE ======================= */
 body.login-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg, #6a47c9, #5e60ce);
+  background-color: var(--fondo-claro);
   font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease;
 }
 
+body.login-page.oscuro {
+  background-color: var(--fondo-oscuro);
+}
+
+/* ======================= CONTENEDORES ======================= */
 main,
 .login-wrapper,
-.logo-login,
-.logo-libropolis {
+.logo-login {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-main {
-  padding: 20px;
-}
-
 .login-wrapper {
   flex: 1;
-  padding-bottom: 40px;
+  padding: 20px 0 40px;
 }
 
+/* ======================= FORMULARIO ======================= */
 section {
   background: var(--fondo-claro);
   padding: 30px 24px;
   border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--sombra-media);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.oscuro section {
+  background: var(--fondo-oscuro);
+  color: var(--texto-claro);
 }
 
 section h2 {
@@ -56,6 +64,13 @@ form input:focus {
   outline: none;
 }
 
+body.oscuro form input {
+  background-color: #333;
+  color: var(--texto-claro);
+  border-color: #555;
+}
+
+/* ======================= BOTÓN PRINCIPAL ======================= */
 form button {
   width: 100%;
   padding: 12px;
@@ -75,8 +90,8 @@ form button:hover {
   box-shadow: 0 10px 22px rgba(105, 48, 195, 0.5);
 }
 
-#toggle-registro,
-#volver-login {
+/* ======================= BOTÓN SECUNDARIO ======================= */
+.boton-secundario {
   display: block;
   margin: 12px auto 0;
   background: transparent;
@@ -87,33 +102,39 @@ form button:hover {
   transition: color 0.3s;
 }
 
-#toggle-registro:hover,
-#volver-login:hover {
+.boton-secundario:hover {
   color: #6930c3;
 }
 
-#mensaje {
-  color: var(--color-peligro);
-  font-size: 13px;
-  text-align: center;
-  margin: 8px 0 16px;
-}
-
-.logo-login,
-.logo-libropolis {
-  margin: 40px 0 20px;
-  animation: fadeIn 0.6s ease-out;
-}
-
-.logo-login img,
-.logo-libropolis img {
-  max-width: 240px;
+/* ======================= LOGO ======================= */
+.logo-login img {
+  width: 320px;
   height: auto;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
   transition: transform 0.3s ease;
 }
 
-.logo-login img:hover,
-.logo-libropolis img:hover {
+.logo-login img:hover {
   transform: scale(1.05);
+}
+
+/* ======================= MENSAJE INLINE ======================= */
+.mensaje-feedback {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+.mensaje-feedback.confirm {
+  background-color: var(--verde-claro);
+  color: var(--verde-oscuro);
+}
+
+.mensaje-feedback.error {
+  background-color: var(--rojo-claro);
+  color: var(--rojo-oscuro);
 }

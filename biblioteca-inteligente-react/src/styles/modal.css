@@ -30,7 +30,6 @@
   transform: translateY(-2px);
 }
 
-
 /* ========================= MODAL AJUSTES - POP-UP ============================ */
 .popup-overlay {
   position: fixed;
@@ -79,36 +78,4 @@
   display: flex;
   gap: 10px;
   margin-top: 25px;
-}
-
-/* ================= MODAL DE MENSAJES =================== */
-.modal-mensaje {
-  font-size: 16px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.modal-icono {
-  font-size: 20px;
-}
-
-/* Colores por tipo */
-.modal-info {
-  background: #e0f7fa;
-  color: #00796b;
-}
-
-.modal-error {
-  background: #ffebee;
-  color: #c62828;
-}
-
-.modal-confirm {
-  background: #fff3e0;
-  color: #ef6c00;
 }

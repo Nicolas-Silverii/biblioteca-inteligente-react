@@ -1,8 +1,9 @@
 function Header() {
   return (
-    <div id="logo-container">
+    <header id="logo-container">
       <img id="logo" src="/assets/react.svg" alt="Logo Biblioteca" />
-    </div>
+      <h1 className="titulo-app">Libropolis</h1>
+    </header>
   );
 }
 

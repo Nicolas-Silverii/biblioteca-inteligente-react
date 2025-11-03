@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import ModalAjustes from "../components/ModalAjustes";
-import Modal from "../components/Modal";
 import TarjetaLibro from "../components/TarjetaLibro";
 
-function Perfil({ usuario, irA, cerrarSesion }) {
+// Recibimos también tema y fuente para que el modal pueda modificar el estado global
+function Perfil({ usuario, irA, cerrarSesion, tema, setTema, fuente, setFuente }) {
   const [mostrarAjustes, setMostrarAjustes] = useState(false);
   const [librosFavoritos, setLibrosFavoritos] = useState([]);
   const [mensajeModal, setMensajeModal] = useState("");
@@ -110,7 +110,17 @@ function Perfil({ usuario, irA, cerrarSesion }) {
           </div>
         </section>
 
-        <ModalAjustes visible={mostrarAjustes} onClose={() => setMostrarAjustes(false)} />
+        {/* Modal de ajustes visuales: ahora recibe y modifica tema y fuente */}
+        <ModalAjustes
+          visible={mostrarAjustes}
+          onClose={() => setMostrarAjustes(false)}
+          tema={tema}
+          setTema={setTema}
+          fuente={fuente}
+          setFuente={setFuente}
+        />
+
+        {/* Modal de confirmación o error */}
         {mostrarModal && (
           <Modal
             mensaje={mensajeModal}

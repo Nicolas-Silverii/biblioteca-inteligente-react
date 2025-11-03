@@ -1,60 +1,44 @@
-import React, { useState, useEffect } from "react";
-import Input from "../components/Input"; 
-import Button from "../components/Button"; 
-import Modal from "../components/Modal"; 
+import React, { useState } from "react";
+import Input from "../components/Input";
+import Button from "../components/Button";
+import ModalAjustes from "../components/ModalAjustes";
 import { useAuth } from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import "../styles/main.css";
 
-function Login({ onLoginExitoso }) {
-  // Estados para los campos del formulario
+function Login({ onLoginExitoso, tema, setTema, fuente, setFuente }) {
   const [usuario, setUsuario] = useState("");
   const [clave, setClave] = useState("");
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-
-  // Estado para alternar entre login y registro
   const [modoRegistro, setModoRegistro] = useState(false);
-
-  // Estado para mostrar el modal con mensajes
-  const [mostrarModal, setMostrarModal] = useState(false);
   const [mensaje, setMensaje] = useState("");
+  const [tipoMensaje, setTipoMensaje] = useState("error");
+  const [mostrarAjustes, setMostrarAjustes] = useState(false);
 
-  // Traemos funciones del hook de autenticación
-  const { login, register, loading, error } = useAuth();
+  const { login, register, loading } = useAuth();
   const navigate = useNavigate();
 
-  // Cuando se monta el componente, le damos estilo al body
-  useEffect(() => {
-    document.body.className = "login-page claro fuente-mediana";
-    return () => {
-      document.body.className = "";
-    };
-  }, []);
-
-  // Función que se ejecuta al enviar el formulario de login
   const enviarInicioSesion = async (e) => {
     e.preventDefault();
     const result = await login(usuario, clave);
     if (result.success) {
-      setMensaje(`¡Bienvenido, ${result.user.nombre || "usuario"}!`);
-      setMostrarModal(true);
-      onLoginExitoso(result.user); // Guardamos el usuario en App.jsx
-      setTimeout(() => navigate("/perfil"), 1500); // Redirigimos al perfil
+      setMensaje(result.message);
+      setTipoMensaje("confirm");
+      onLoginExitoso(result.user);
+      setTimeout(() => navigate("/biblioteca"), 1500);
     } else {
-      setMensaje(error || "Error al iniciar sesión");
-      setMostrarModal(true);
+      setMensaje(result.message);
+      setTipoMensaje("error");
     }
   };
 
-  // Función que se ejecuta al enviar el formulario de registro
   const enviarRegistro = async (e) => {
     e.preventDefault();
     const result = await register(nombre, apellido, usuario, clave);
-    setMensaje(result.message || "Error al registrarse");
-    setMostrarModal(true);
+    setMensaje(result.message);
+    setTipoMensaje(result.success ? "confirm" : "error");
     if (result.success) {
-      // Si se registró bien, volvemos al modo login y limpiamos los campos
       setModoRegistro(false);
       setNombre("");
       setApellido("");
@@ -63,25 +47,15 @@ function Login({ onLoginExitoso }) {
     }
   };
 
-  // Cierra el modal y, si el mensaje fue de éxito, vuelve al login
-  const cerrarModal = () => {
-    setMostrarModal(false);
-    if (mensaje.includes("Registro exitoso")) {
-      setModoRegistro(false);
-    }
-  };
-
   return (
     <>
-      {/* Logo de la app */}
-      <div className="logo-libropolis">
-        <img src="/img/logo2.png" alt="Logo Libropolis" />
+      <div className="logo-login">
+        <img id="logo-login" src="/img/logo2.png" alt="Logo de login" />
       </div>
 
       <div className="login-wrapper">
         <main>
           <section id="seccion-inicio">
-            {/* Alternamos entre login y registro */}
             {!modoRegistro ? (
               <>
                 <h2>Iniciar sesión</h2>
@@ -91,6 +65,7 @@ function Login({ onLoginExitoso }) {
                   <div className="botones-login">
                     <Button text={loading ? "Cargando..." : "Ingresar"} type="submit" disabled={loading} />
                   </div>
+                  {mensaje && <p className={`mensaje-feedback ${tipoMensaje}`}>{mensaje}</p>}
                 </form>
                 <button className="boton boton-secundario" onClick={() => setModoRegistro(true)}>
                   ¿No tenés cuenta? Registrate acá
@@ -107,22 +82,25 @@ function Login({ onLoginExitoso }) {
                   <div className="botones-login">
                     <Button text={loading ? "Cargando..." : "Registrarme"} type="submit" disabled={loading} />
                   </div>
+                  {mensaje && <p className={`mensaje-feedback ${tipoMensaje}`}>{mensaje}</p>}
                 </form>
                 <button className="boton boton-secundario" onClick={() => setModoRegistro(false)}>
                   ¿Ya tenés cuenta? Volver al login
                 </button>
               </>
             )}
-
-            {/* Modal para mostrar mensajes de éxito o error */}
-            {mostrarModal && (
-              <Modal mensaje={mensaje} tipo={mensaje.includes("exitoso") ? "confirm" : "error"} onClose={cerrarModal} />
-            )}
           </section>
         </main>
       </div>
 
-     
+      <ModalAjustes
+        visible={mostrarAjustes}
+        onClose={() => setMostrarAjustes(false)}
+        tema={tema}
+        setTema={setTema}
+        fuente={fuente}
+        setFuente={setFuente}
+      />
     </>
   );
 }
