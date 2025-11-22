@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 // Este hook maneja toda la lógica de autenticación: login, registro, sesión actual y logout.
-// Guarda los datos en localStorage para que persistan entre sesiones.
 
 export function useAuth() {
   // Estados para mostrar carga y errores en los formularios
@@ -13,15 +12,14 @@ export function useAuth() {
 
   // Funciones para leer y escribir en localStorage
   const obtenerDeStorage = (clave) => JSON.parse(localStorage.getItem(clave));
-  const guardarEnStorage = (clave, valor) =>
-    localStorage.setItem(clave, JSON.stringify(valor));
+  const guardarEnStorage = (clave, valor) => localStorage.setItem(clave, JSON.stringify(valor));
 
   // Si no hay usuarios guardados, inicializamos con uno por defecto
   if (!obtenerDeStorage("usuarios")) {
     guardarEnStorage("usuarios", [
       {
         usuario: "admin",
-        password: "1234",
+        password: "1234", 
         rol: "admin",
         nombre: "Admin",
         apellido: "Root",
@@ -104,7 +102,7 @@ export function useAuth() {
       return { success: false, message: mensaje };
     }
 
-    // Creamos el nuevo usuario y lo guardamos
+    // Crear nuevo usuario y guardar
     const nuevoUsuario = {
       usuario: email,
       password: claveRegistro,
