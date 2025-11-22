@@ -1,30 +1,49 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import ModalAjustes from "../components/ModalAjustes";
+import Modal from "../components/Modal";
 import TarjetaLibro from "../components/TarjetaLibro";
 
-// Recibimos también tema y fuente para que el modal pueda modificar el estado global
 function Perfil({ usuario, irA, cerrarSesion, tema, setTema, fuente, setFuente }) {
   const [mostrarAjustes, setMostrarAjustes] = useState(false);
   const [librosFavoritos, setLibrosFavoritos] = useState([]);
   const [mensajeModal, setMensajeModal] = useState("");
   const [tipoModal, setTipoModal] = useState("info");
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [accionesModal, setAccionesModal] = useState([]);
+  const [mostrarAgregar, setMostrarAgregar] = useState(false);
 
   useEffect(() => {
-    const favoritos = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
-    setLibrosFavoritos(favoritos);
+    try {
+      const favoritosRaw = JSON.parse(localStorage.getItem("librosFavoritos")) || [];
+      const favoritosNorm = favoritosRaw.map((lib) => ({
+        id: lib.id ?? Date.now(),
+        titulo: lib.titulo ?? "Sin título",
+        autor: lib.autor ?? "Desconocido",
+        anio: lib.anio ?? lib.año ?? new Date().getFullYear(),
+        imagen_url:
+          lib.imagen_url ??
+          lib.imagen ??
+          "https://via.placeholder.com/120x180?text=Sin+portada",
+      }));
+      setLibrosFavoritos(favoritosNorm);
+    } catch (e) {
+      console.error("Error al leer favoritos:", e);
+      setLibrosFavoritos([]);
+    }
   }, []);
 
   const agregarLibro = (e) => {
     e.preventDefault();
-    const titulo = e.target.titulo.value.trim();
-    const autor = e.target.autor.value.trim();
-    const imagen = e.target.imagen.files[0];
+    const titulo = e.target.titulo?.value?.trim() || "";
+    const autor = e.target.autor?.value?.trim() || "";
+    const fileInput = e.target.imagen;
+    const file = fileInput?.files?.[0] || null;
 
-    if (!titulo || !autor || !imagen) {
-      setMensajeModal("Completá todos los campos.");
+    if (!titulo || !autor) {
+      setMensajeModal("Completá título y autor.");
       setTipoModal("error");
+      setAccionesModal([]);
       setMostrarModal(true);
       return;
     }
@@ -34,10 +53,10 @@ function Perfil({ usuario, irA, cerrarSesion, tema, setTema, fuente, setFuente }
         libro.titulo.toLowerCase() === titulo.toLowerCase() &&
         libro.autor.toLowerCase() === autor.toLowerCase()
     );
-
     if (existe) {
       setMensajeModal("Ese libro ya está en tus favoritos.");
       setTipoModal("error");
+      setAccionesModal([]);
       setMostrarModal(true);
       return;
     }
@@ -46,17 +65,23 @@ function Perfil({ usuario, irA, cerrarSesion, tema, setTema, fuente, setFuente }
       id: Date.now(),
       titulo,
       autor,
-      imagen: URL.createObjectURL(imagen),
-      año: new Date().getFullYear(),
+      anio: new Date().getFullYear(),
+      imagen_url: file ? URL.createObjectURL(file) : "https://via.placeholder.com/120x180?text=Sin+portada",
     };
 
     const actualizados = [...librosFavoritos, nuevoLibro];
     localStorage.setItem("librosFavoritos", JSON.stringify(actualizados));
     setLibrosFavoritos(actualizados);
+
     e.target.reset();
+    setMostrarAgregar(false);
 
     setMensajeModal("¡Libro agregado correctamente!");
     setTipoModal("confirm");
+    setAccionesModal([
+      { texto: "Ver todos", onClick: () => setMostrarModal(false) },
+      { texto: "Volver a inicio", onClick: () => irA("biblioteca") },
+    ]);
     setMostrarModal(true);
   };
 
@@ -87,8 +112,8 @@ function Perfil({ usuario, irA, cerrarSesion, tema, setTema, fuente, setFuente }
                   id={libro.id}
                   titulo={libro.titulo}
                   autor={libro.autor}
-                  imagen={libro.imagen}
-                  año={libro.año}
+                  imagen={libro.imagen_url}
+                  anio={libro.anio}
                   onEliminar={eliminarLibro}
                 />
               ))
@@ -98,19 +123,46 @@ function Perfil({ usuario, irA, cerrarSesion, tema, setTema, fuente, setFuente }
           </div>
         </section>
 
-        <section id="agregar-libro" className="grid-libros">
-          <div className="libro-favorito">
-            <h3>Agregar nuevo libro</h3>
-            <form id="form-nuevo-libro" onSubmit={agregarLibro}>
-              <input type="text" name="titulo" placeholder="Título" required />
-              <input type="text" name="autor" placeholder="Autor" required />
-              <input type="file" name="imagen" accept="image/*" required />
-              <button type="submit" className="boton-primario">Agregar</button>
-            </form>
-          </div>
+        {/* Botón para abrir pop-up de agregar libro */}
+        <section id="agregar-libro" style={{ textAlign: "center", marginTop: "2rem" }}>
+          <button
+            className="boton-primario"
+            style={{
+              padding: "12px 20px",
+              fontSize: "1rem",
+              borderRadius: "10px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+            }}
+            onClick={() => setMostrarAgregar(true)}
+          >
+            📚 Agregar nuevo libro
+          </button>
         </section>
 
-        {/* Modal de ajustes visuales: ahora recibe y modifica tema y fuente */}
+        {/* Pop-up de agregar libro */}
+        {mostrarAgregar && (
+          <div className="popup-overlay">
+            <div className="popup-contenido">
+              <h3>Agregar nuevo libro</h3>
+              <form id="form-nuevo-libro" onSubmit={agregarLibro}>
+                <input type="text" name="titulo" placeholder="Título" required />
+                <input type="text" name="autor" placeholder="Autor" required />
+                <input type="file" name="imagen" accept="image/*" />
+                <div className="modal-acciones">
+                  <button type="submit" className="boton-primario">Agregar</button>
+                  <button
+                    type="button"
+                    className="boton-secundario"
+                    onClick={() => setMostrarAgregar(false)}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
         <ModalAjustes
           visible={mostrarAjustes}
           onClose={() => setMostrarAjustes(false)}
@@ -120,12 +172,12 @@ function Perfil({ usuario, irA, cerrarSesion, tema, setTema, fuente, setFuente }
           setFuente={setFuente}
         />
 
-        {/* Modal de confirmación o error */}
         {mostrarModal && (
           <Modal
             mensaje={mensajeModal}
             tipo={tipoModal}
             onClose={() => setMostrarModal(false)}
+            acciones={accionesModal}
           />
         )}
       </main>
