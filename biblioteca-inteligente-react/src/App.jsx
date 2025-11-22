@@ -34,7 +34,7 @@ function AppWrapper({ tema, setTema, fuente, setFuente }) {
     logout();
     setUsuarioActivo(null);
     navigate("/");
-  };
+  }; 
 
   const irA = (ruta) => navigate(`/${ruta}`);
 
