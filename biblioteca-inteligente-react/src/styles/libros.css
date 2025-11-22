@@ -143,6 +143,15 @@
   background-color: var(--color-secundario);
 }
 
+.tarjeta-libro {
+  transition: opacity 0.4s ease;
+}
+
+.tarjeta-libro.fade-out {
+  opacity: 0;
+}
+
+
 /* Tema oscuro aplicado a secciones principales */
 body.oscuro #mis-libros,
 body.oscuro .grid-libros,
